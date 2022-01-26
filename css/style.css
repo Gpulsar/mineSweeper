@@ -1,0 +1,10 @@
+h1 {
+    color: rgb(0, 219, 208);
+}
+
+.cell {
+    height: 50px;
+    width: 50px;
+    border: 1px solid black;
+    background-color:coral
+}
