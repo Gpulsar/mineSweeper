@@ -2,9 +2,18 @@ h1 {
     color: rgb(0, 219, 208);
 }
 
-.cell {
+td {
+    text-align: center;
     height: 50px;
     width: 50px;
     border: 1px solid black;
-    background-color:coral
+    background-color:#c0c0c0
+}
+
+.mine {
+    background-color: #ffcaca;
+}
+
+.counter {
+    background-color: #f1f1f1;
 }
