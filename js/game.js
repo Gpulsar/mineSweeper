@@ -5,8 +5,8 @@ const FLAG = '🚩';
 
 var gBoard;
 var gLevel = {
-    size: 6,
-    mines: 3,
+    size: 4,
+    mines: 2,
 };
 
 var gGame = {
@@ -40,9 +40,6 @@ function expandShown(rowIdx, colIdx) {
     }
 }
 
-function blockLeftClicks(i, j) {
-    return;
-}
 
 function markCell(i, j) {
     var currCell = gBoard[i][j];
@@ -62,22 +59,24 @@ function markCell(i, j) {
 
 
 function checkVictory() {
-    for (var i = 0; i < gBoard.length; i++) {
-        for (var j = 0; j < gBoard[0].length; j++) {
-            var currCell = gBoard[i][j]
-            if (currCell.isMine && !currCell.isShown) return
-        };
-        console.log('victory');
-    }
+    // console.log(gBoard);
+    // for (var i = 0; i < gBoard.length - 1; i++) {
+    //     for (var j = 0; j < gBoard[0].length - 1; j++) {
+    //         var currCell = gBoard[i][j];
+    //         if (currCell.isShown || currCell.isMine && currCell.isMarked) return true
+    //         else return false
+    //     }
+    // }
 }
 
+
 function cellClicked(event, i, j) {
-    
+
     //right click:
     if (event.button === 2) {
         markCell(i, j);
-        checkVictory();
-    // left click:
+
+        // left click:
     } else {
         if (gBoard[i][j].isMarked) return;
         else if (gBoard[i][j].isMine) {
@@ -86,9 +85,10 @@ function cellClicked(event, i, j) {
         else {
             expandShown(i, j);
             renderBoard();
-            checkVictory();
+
         }
     }
+    checkVictory()
 }
 
 function setMinesNegsCount() {
@@ -122,7 +122,7 @@ function renderBoard() {
                 strHTML += `onmousedown="cellClicked(event, ${i}, ${j})" class="cell-${i}-${j}">${FLAG}</td>`;
             }
             else if (!currCell.isShown) {
-                strHTML += `onmousedown="cellClicked(event, ${i}, ${j})" class="cell-${i}-${j}"></td>`;
+                strHTML += `onmousedown="cellClicked(event, ${i}, ${j})" class="cell-${i}-${j} hidden"></td>`;
             }
             else if (currCell.isMine) {
                 strHTML += `onmousedown="cellClicked(event, ${i}, ${j})" class="cell-${i}-${j} mine">${BOMB}</td>`;
