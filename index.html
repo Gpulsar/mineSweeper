@@ -12,17 +12,20 @@
 </head>
 
 <body onload="init()">
-    <h1>Mine Sweeper</h1>
-    
+    <h1>Alien Sweeper</h1>
+
     <div class="level">
         <button class="easy" onclick="setLevel(4, 2)">Easy</button>
         <button class="medium" onclick="setLevel(8, 12)">Medium</button>
         <button class="hard" onclick="setLevel(12, 30)">Hard</button>
     </div>
-    <div class='smily'>🤔</div>
-    <div class="timer">0</div>
+    <div class="status-panel">
+        <div class="status flags">🌌 <span></span></div>
+        <div class='status smily'></div>
+        <div class="status timer">0</div>
+    </div>
     <div class="game-board"></div>
-    <div class="lives">Lives: <span>💪💪💪</span></div>
+    <div class="lives">🛸🛸🛸</div>
 
     <script src="js/properties.js"></script>
     <script src="js/utils.js"></script>
