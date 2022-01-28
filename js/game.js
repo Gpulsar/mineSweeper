@@ -13,8 +13,12 @@ var gGame = {
     isOn: false,
     shownCount: 0,
     markedCount: 0,
-    secsPassed: 0
+    // secsPassed: 0
 };
+
+var gLives = 3;
+
+var gIsFirstClick = true;
 
 // init() ///////
 function init() {
@@ -22,10 +26,12 @@ function init() {
     placeMines(gLevel.mines);
     setMinesNegsCount();
     renderBoard(gBoard);
-    console.table(gBoard);
-    console.log('currTable:', gBoard);
+    // console.table(gBoard);
+    // console.log('currTable:', gBoard);
 }
 /////////////////
+
+
 
 function expandShown(rowIdx, colIdx) {
     for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
@@ -60,35 +66,57 @@ function markCell(i, j) {
 
 function checkVictory() {
     // console.log(gBoard);
-    // for (var i = 0; i < gBoard.length - 1; i++) {
-    //     for (var j = 0; j < gBoard[0].length - 1; j++) {
-    //         var currCell = gBoard[i][j];
-    //         if (currCell.isShown || currCell.isMine && currCell.isMarked) return true
-    //         else return false
-    //     }
-    // }
+    for (var i = 0; i < gBoard.length; i++) {
+        for (var j = 0; j < gBoard[0].length; j++) {
+            var elCell = document.querySelector(`.cell-${i}-${j}`);
+            if (elCell.classList.contains('hidden')) {
+                // console.log(elCell.classList);
+                return;
+            }
+        }
+    }
+    document.querySelector('.smily').innerText = '😀';
+    console.log('victory');
 }
 
 
-function cellClicked(event, i, j) {
 
-    //right click:
+function cellClicked(event, i, j) {
+    // check for firstclick
+    if (gIsFirstClick && (event.button >= 0)) {
+        gIsFirstClick = false;
+        startStopWatch();
+
+    }
+    //if right click:
     if (event.button === 2) {
         markCell(i, j);
-
-        // left click:
+        //if left click:
     } else {
+        //  ignor marked
         if (gBoard[i][j].isMarked) return;
+        // clicked mine
         else if (gBoard[i][j].isMine) {
-            gameOver();
+            if (gLives > 1) {
+                // console.log('before', gLives);
+                gLives--;
+                updateLives();
+                // console.log('after', gLives);
+            }
+
+            else {
+                gameOver();
+                return;
+            }
         }
         else {
             expandShown(i, j);
-            renderBoard();
 
         }
     }
-    checkVictory()
+    // finally
+    renderBoard();
+    checkVictory();
 }
 
 function setMinesNegsCount() {
@@ -139,6 +167,7 @@ function renderBoard() {
     '</tbody></table>';
     var elBoard = document.querySelector('.game-board');
     elBoard.innerHTML = strHTML;
+    tableSizing();
 }
 
 function buildBord() {
@@ -164,5 +193,7 @@ function gameOver() {
             gBoard[i][j].isShown = true;
         };
     }
+    document.querySelector('.smily').innerText = '😵';
+    document.querySelector('span').innerText = '';
     renderBoard();
 }
