@@ -1,7 +1,7 @@
 'use strict';
 
 const ALIEN = '👽';
-const FLAG = '🌌';
+const FLAG = '🚀';
 
 var gBoard;
 var gLevel = {
@@ -34,9 +34,10 @@ function init() {
 
 
 function cellClicked(event, i, j) {
-    var currCell = gBoard[i][j]
+    var currCell = gBoard[i][j];
     // check for firstclick
     if (gIsFirstClick && (event.button >= 0)) {
+        console.log('first');
         startStopWatch();
         setNewBoard(i, j);
     }
@@ -62,7 +63,7 @@ function cellClicked(event, i, j) {
             }
         }
         else {
-            currCell.isShown = true
+            currCell.isShown = true;
             expandShown(i, j);
         }
     }
@@ -159,14 +160,24 @@ function buildBord() {
 }
 
 function gameOver() {
+
     console.log('game over');
     for (var i = 0; i < gBoard.length; i++) {
         for (var j = 0; j < gBoard[0].length; j++) {
-            gBoard[i][j].isShown = true;
+            var currCell = gBoard[i][j];
+            currCell.isShown = true;
+            if (currCell.isMarked && !currCell.isMine) {
+                var elCell = document.querySelector(`.cell-${i}-${j}`);
+                console.log(elCell);
+                elCell.style.backgroundColor = "red"
+            }
         };
     }
+
     document.querySelector('.smily').innerText = '😵';
     document.querySelector('.lives').innerText = 'Bad job. Your\'re fired.';
+
+   
     renderBoard();
-    endStopWatch()
+    endStopWatch();
 }

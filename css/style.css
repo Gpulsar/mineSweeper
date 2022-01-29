@@ -27,7 +27,7 @@ table {
 }
 
 .mine {
-    background-color: black;
+    background-color: rgb(0, 0, 0);
 }
 
 .counter {
@@ -51,10 +51,8 @@ table {
     margin: 0 5px;
 }
 
-
 .flags {
     display: inline-block;
-
     font-size: 25px;
 }
 
@@ -73,3 +71,4 @@ table {
     font-size: 20px;
     margin: 20px;
 }
+

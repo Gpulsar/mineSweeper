@@ -3,7 +3,6 @@
 var gWatchInterval;
 var gStartTime;
 
-
 // timer //////////////
 function startStopWatch() {
   gWatchInterval = setInterval(updateWatch, 1);
@@ -27,6 +26,15 @@ function clearTimer() {
 }
 //////////////////////
 
+function exposeAllCells() {
+  for (var i = 0; i < gBoard.length; i++) {
+    for (var j = 0; j < gBoard[0].length; j++) {
+      gBoard[i][j].isShown = true;
+    };
+  }
+}
+
+
 function updateLives() {
   var elLives = document.querySelector('.lives');
   elLives.innerText = '';
@@ -37,8 +45,8 @@ function updateLives() {
 
 function setNewBoard(i, j) {
   placeMines(i, j);
-  expandShown(i, j);
   setMinesNegsCount();
+  expandShown(i, j);
   renderBoard(gBoard);
 }
 
@@ -78,8 +86,7 @@ function markCell(i, j) {
 
 
 function expandShown(rowIdx, colIdx) {
-  // build an array of negs
-
+  // build an array of negs  
   for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
     if (i < 0 || i > gBoard.length - 1) continue;
     for (var j = colIdx - 1; j <= colIdx + 1; j++) {
@@ -91,6 +98,8 @@ function expandShown(rowIdx, colIdx) {
     }
   }
 }
+
+
 
 
 function countMinesAround(board, rowIdx, colIdx) {
